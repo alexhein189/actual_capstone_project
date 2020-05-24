@@ -1,0 +1,3 @@
+
+class NoItemsException(Exception):
+    pass
