@@ -1,0 +1,2 @@
+class NoUserException(Exception):
+    pass

@@ -1,12 +1,14 @@
 from items import item
 from noitemxexception import NoItemsException
+from typing import Dict
 import datetime
 
 class shop_keeper:
 
-    def __init__(self, shop_name, location, items_in_stock: dict[item]):
+    def __init__(self, shop_name, longitude:float, latitude:float, items_in_stock: Dict[item]):
         self.shop_name = shop_name
-        self.location = location
+        self.longitude = longitude
+        self.latitude = latitude
         self.items_in_stock = items_in_stock
 
     def contains_item(self, item_name):

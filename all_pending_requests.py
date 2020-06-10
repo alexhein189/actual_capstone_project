@@ -1,11 +1,15 @@
 from typing import List
 from items_request import itemsRequest
+from _grid import grid
 
 
 class pending_requests:
 
-    def __init__(self, list_of_requests: List[itemsRequest]):
+    #TODO: CHANGE THE MINIMUM HEAP TO A MAXIMUM HEAP
+
+    def __init__(self, list_of_requests: List[itemsRequest], shop_keeper_grid: grid):
         self.list_of_requests = list_of_requests
+        self.shop_keeper_grid = shop_keeper_grid
 
     def number_of_requests(self):
         return len(self.list_of_requests)
@@ -19,8 +23,8 @@ class pending_requests:
         child_index = self.number_of_requests()
         while child_index > 1:
             parent_index = child_index // 2
-            child_remaining_days = self.list_of_requests[child_index - 1].finding_remaining_days()
-            parent_remaining_days = self.list_of_requests[parent_index - 1].finding_remaining_days()
+            child_remaining_days = self.list_of_requests[child_index - 1].emergency_index_generator(self.shop_keeper_grid)
+            parent_remaining_days = self.list_of_requests[parent_index - 1].emergency_index_generator(self.shop_keeper_grid)
             if child_remaining_days < parent_remaining_days:
                 dummy_request = self.list_of_requests[child_index - 1]
                 self.list_of_requests[child_index - 1] = self.list_of_requests[parent_index - 1]
@@ -50,14 +54,14 @@ class pending_requests:
             if left_index > self.number_of_requests():
                 break
 
-            left_remaining_days = self.list_of_requests[left_index - 1].finding_remaining_days()
+            left_remaining_days = self.list_of_requests[left_index - 1].emergency_index_generator(self.shop_keeper_grid)
 
             if right_index <= self.number_of_requests():
-                right_remaining_days = self.list_of_requests[right_index - 1].finding_remaining_days()
+                right_remaining_days = self.list_of_requests[right_index - 1].emergency_index_generator(self.shop_keeper_grid)
             else:
                 right_remaining_days = None
 
-            parent_remaining_days = self.list_of_requests[parent_index - 1].finding_remaining_days()
+            parent_remaining_days = self.list_of_requests[parent_index - 1].emergency_index_generator(self.shop_keeper_grid)
 
             if left_remaining_days < parent_remaining_days and (
                     right_remaining_days is None or right_remaining_days > left_remaining_days):
