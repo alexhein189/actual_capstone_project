@@ -4,6 +4,8 @@ from items_request import itemsRequest
 from user_dataframe import user_df
 from _grid import grid
 
+#TODO: GET RID OF EMERGENCY INDEX ALL TOGETHER
+#_____________________________________________
 
 class emergency_index:
     def __init__(self, item_request: itemsRequest, shop_keeper_grid: grid):

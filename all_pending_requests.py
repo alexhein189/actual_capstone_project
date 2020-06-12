@@ -23,8 +23,8 @@ class pending_requests:
         child_index = self.number_of_requests()
         while child_index > 1:
             parent_index = child_index // 2
-            child_remaining_days = self.list_of_requests[child_index - 1].emergency_index_generator(self.shop_keeper_grid)
-            parent_remaining_days = self.list_of_requests[parent_index - 1].emergency_index_generator(self.shop_keeper_grid)
+            child_remaining_days = self.list_of_requests[child_index - 1].emergency_index_generator()
+            parent_remaining_days = self.list_of_requests[parent_index - 1].emergency_index_generator()
             if child_remaining_days < parent_remaining_days:
                 dummy_request = self.list_of_requests[child_index - 1]
                 self.list_of_requests[child_index - 1] = self.list_of_requests[parent_index - 1]
@@ -54,14 +54,14 @@ class pending_requests:
             if left_index > self.number_of_requests():
                 break
 
-            left_remaining_days = self.list_of_requests[left_index - 1].emergency_index_generator(self.shop_keeper_grid)
+            left_remaining_days = self.list_of_requests[left_index - 1].emergency_index_generator()
 
             if right_index <= self.number_of_requests():
-                right_remaining_days = self.list_of_requests[right_index - 1].emergency_index_generator(self.shop_keeper_grid)
+                right_remaining_days = self.list_of_requests[right_index - 1].emergency_index_generator()
             else:
                 right_remaining_days = None
 
-            parent_remaining_days = self.list_of_requests[parent_index - 1].emergency_index_generator(self.shop_keeper_grid)
+            parent_remaining_days = self.list_of_requests[parent_index - 1].emergency_index_generator()
 
             if left_remaining_days < parent_remaining_days and (
                     right_remaining_days is None or right_remaining_days > left_remaining_days):
