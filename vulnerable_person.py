@@ -12,6 +12,7 @@ class vulnerable_person:
         self.latitude = latitude
         df.add_user(self)
         self.nearest_shops = {}
+        self.nearest_volunteers = {}
         grid_.add_user_(latitude, longitude, id_code)
         for id, distance in grid_.get_nearest_users(latitude, longitude, id_code, df).items():
             self.add_nearest_user(id, distance)
@@ -23,6 +24,8 @@ class vulnerable_person:
     def add_nearest_user(self, id, distance):
         if id.startswith("SH"):
             self.nearest_shops[id] = distance
+        if id.startswith("VO"):
+            self.nearest_volunteers[id] = distance
 
 
 

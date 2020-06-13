@@ -1,6 +1,7 @@
 from typing import Dict
 from user_dataframe import user_df
 from distance import distance
+from math import ceil
 
 
 class grid:
@@ -42,18 +43,19 @@ class grid:
     #                     df.add_user(user)
     #     return df
 
-    def get_nearest_users(self, latitude, longitude, new_user_id, df):
+    def get_nearest_users(self, latitude, longitude, new_user_id, df, available_range=20):
         x = int(latitude * 10)
         y = int(longitude * 10)
         distance_dict = {}
-        for i in [x - 1, x, x + 1]:
-            for j in [y - 1, y, y + 1]:
+        no_squares = ceil(available_range / 5)
+        for i in range(x - no_squares, x + no_squares + 1):
+            for j in range(y - no_squares, y + no_squares + 1):
                 if (i, j) in self.dictionary_of_places:
                     for id in self.dictionary_of_places[(i, j)]:
                         user = df.get_user_by_id(id)
                         # TODO: To make sure where the latitude and longitude are coming from
                         d = distance(latitude, longitude, user.latitude, user.longitude).calculate_distance()
-                        if d < 2.5:
+                        if d < available_range and (d < user.available_range if id.startswith("VO") else True):
                             distance_dict[id] = d
         for id, d in distance_dict.items():
             df.get_user_by_id(id).add_nearest_user(new_user_id, d)

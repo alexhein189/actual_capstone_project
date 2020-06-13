@@ -47,6 +47,9 @@ def asking_vulnerable_person():
 print('hello_world')
 
 # user_type = int(input("Are you a vulnerable person(1), volunteer (2) or a shopkeeper (3)"))
+
+
+
 mary_vulnerable = vulnerable_person("Mary", "mary101","VP23123", 51.122445, -0.12983, main_grid,main_users_df )
 chris_vulnerable = vulnerable_person("Chris", "chris101","VP91234", 51.19123, -0.16854, main_grid,main_users_df)
 alice_vulnerable = vulnerable_person("Alice", "alice101","VP78743", 51.24521, -0.14766, main_grid,main_users_df)
@@ -60,9 +63,15 @@ kate_vulnerable = vulnerable_person("Kate", "kate101","VP33219", 51.34521, -0.25
 
 harris_shop = shop_keeper("Harris Food", "SH84983", 51.2310572,-0.122247, {},main_grid, main_users_df)
 tesco_express = shop_keeper("Tesco Express", "SH12937", 51.25234474,-0.1380595, {},main_grid, main_users_df)
-harris_shop = shop_keeper("Sainsbury", "SH52341", 51.1275303,-0.1351368, {},main_grid, main_users_df)
-harris_shop = shop_keeper("John Walker", "SH34522", 51.1268855,-0.1256531, {},main_grid, main_users_df)
+sainsbury = shop_keeper("Sainsbury", "SH52341", 51.1275303,-0.1351368, {},main_grid, main_users_df)
+john_walker = shop_keeper("John Walker", "SH34522", 51.1268855,-0.1256531, {},main_grid, main_users_df)
 
+volunteer_a = volunteer_var("Albert", "albert101", "VO67564", 51.18412,-0.18234, 4.5,main_grid, main_users_df)
+volunteer_b = volunteer_var("Jane", "jane101", "VO92345", 51.19528862,-0.16214, 4,main_grid, main_users_df)
+volunteer_c = volunteer_var("Tara", "tara101", "VO87326", 51.2275303,-0.1351368, 3,main_grid, main_users_df)
+volunteer_d = volunteer_var("John","john101", "VO39285", 51.2268855,-0.1556531, 4.5,main_grid, main_users_df)
+volunteer_e = volunteer_var("Robert","robert101", "VO54761", 51.3268855,-0.2256531, 2,main_grid, main_users_df)
+volunteer_f = volunteer_var("Daniel","daniel101", "VO33333", 51.3368855,-0.1396531, 2,main_grid, main_users_df)
 
 with open(filename, "wb") as file:
     pickle.dump(main_grid, file)
