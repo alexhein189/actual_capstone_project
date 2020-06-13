@@ -1,7 +1,7 @@
 import datetime
 
 from items_request import itemsRequest
-from user_dataframe import user_df
+
 from _grid import grid
 
 #TODO: GET RID OF EMERGENCY INDEX ALL TOGETHER

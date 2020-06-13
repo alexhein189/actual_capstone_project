@@ -1,14 +1,17 @@
 #when vulnerable person request some items
 from typing import List
+
 import datetime
 
 
 class itemsRequest:
-    def __init__(self, vulnerable_id_code:str, items:List[str], start_date:datetime.datetime, priority_hours:int, emergency:int, number_of_shops):
+    def __init__(self, vulnerable_id_code:str, items:List[str], start_date:datetime.datetime, end_date:datetime.datetime, emergency:int, number_of_shops, main_dictionary):
         self.items = items #string
         self.vulnerable_id_code = vulnerable_id_code
         self.start_date = start_date
-        self.priority_hours = priority_hours  #time
+        self.end_date = end_date
+        self.priority_hours = ((end_date - start_date).total_seconds() // 3600)  #time
+        self.nearest_volunteers = main_dictionary[vulnerable_id_code].nearest_volunteers
         self.emergency = emergency
         self.number_of_shops = number_of_shops
 
@@ -21,6 +24,9 @@ class itemsRequest:
         # TODO: maybe change + of shopkeeper available in range to -
         priority_score = self.finding_remaining_hours() + self.emergency + self.number_of_shops
         return priority_score
+
+    def find_volunteers_with_time(self):
+        pass
 
 
 

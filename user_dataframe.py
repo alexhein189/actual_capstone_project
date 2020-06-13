@@ -2,7 +2,7 @@ from typing import Dict
 from nouserexcept import NoUserException
 
 
-class user_df:
+class user_dictionary:
 
     def __init__(self):
         self.user_hash = {}

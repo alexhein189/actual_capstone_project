@@ -1,20 +1,20 @@
 from items import item
 from noitemxexception import NoItemsException
 from typing import Dict
-from user_dataframe import user_df
+
 from _grid import grid
 import datetime
 
 class shop_keeper:
-    def __init__(self, shop_name, id_code:str, latitude:float, longitude:float, items_in_stock: Dict[str,item], grid_:grid, df: user_df):
+    def __init__(self, shop_name, id_code:str, latitude:float, longitude:float, items_in_stock: Dict[str,item], grid_:grid, dictionary):
         self.shop_name = shop_name
         self.id_code = id_code
         self.longitude = longitude
         self.latitude = latitude
         self.items_in_stock = items_in_stock
-        df.add_user(self)
+        dictionary[id_code] = self
         grid_.add_user_(latitude, longitude, id_code)
-        grid_.get_nearest_users(latitude, longitude, id_code, df)
+        grid_.get_nearest_users(latitude, longitude, id_code, dictionary)
 
     def contains_item(self, item_name):
         if item_name in self.items_in_stock and (self.items_in_stock[item_name].stock_quantity != 0):

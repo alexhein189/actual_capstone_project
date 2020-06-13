@@ -6,6 +6,7 @@ from _grid import grid
 class pending_requests:
 
     #TODO: CHANGE THE MINIMUM HEAP TO A MAXIMUM HEAP
+    #TODO: use the pending request heap on the vulnerable people in the dictionary of each volunteer.
 
     def __init__(self, list_of_requests: List[itemsRequest], shop_keeper_grid: grid):
         self.list_of_requests = list_of_requests
