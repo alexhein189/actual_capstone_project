@@ -9,11 +9,13 @@ from _grid import grid
 class volunteer_var:
 
     def __init__(self, name: str, username: str, id_code: str,
-                 latitude:float, longitude:float, timestamp: Dict[int, List[int]], available_range:float, grid_:grid, dictionary):
+                 latitude:float, longitude:float, availability: Dict[int, List[int]], available_range:float, grid_:grid, dictionary):
         self.name = name
         self.username = username
         self.id_code = id_code
-        self.timestamp = timestamp
+        for day in availability:
+            availability[day].sort()
+        self.availability = availability
         self.longitude = longitude
         self.latitude = latitude
         self.available_range = available_range

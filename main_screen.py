@@ -56,7 +56,7 @@ sainsbury = shop_keeper("Sainsbury", "SH52341", 51.1275303,-0.1351368, {"rice":N
 john_walker = shop_keeper("John Walker", "SH34522", 51.1268855,-0.1256531, {"paracetemol":None, "cough drops":None, "Advil":None, "vitamin":None},main_grid, main_users_dictionary)
 
 volunteer_c = volunteer_var("Tara", "tara101", "VO87326", 51.1275303,-0.1351368,{5:[14,15,16],6:[14,15,16],1:[13,14,15]}, 3,main_grid, main_users_dictionary)
-volunteer_d = volunteer_var("John","john101", "VO39285", 51.2268855,-0.1556531,{0:[14,15,16],2:[14,15,16],2:[13,14,15], 3:[14,15,16]}, 4.5,main_grid, main_users_dictionary)
+volunteer_d = volunteer_var("John","john101", "VO39285", 51.2268855,-0.1556531,{0:[14,15,16],2:[14,15,16],3:[13,14,15], 4:[14,15,16]}, 4.5,main_grid, main_users_dictionary)
 volunteer_a = volunteer_var("Albert", "albert101", "VO67564", 51.18412,-0.18234,{3:[13,14,15]}, 4.5,main_grid, main_users_dictionary)
 volunteer_e = volunteer_var("Robert","robert101", "VO54761", 51.3268855,-0.2256531,{6:[14,15,16],2:[14,15,16]}, 10,main_grid, main_users_dictionary)
 volunteer_f = volunteer_var("Daniel","daniel101", "VO33333", 51.1368855,-0.1396531,{4:[14,15,16],5:[14,15,16],2:[13,14,15]}, 2,main_grid, main_users_dictionary)

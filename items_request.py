@@ -29,10 +29,19 @@ class itemsRequest:
 
     def find_volunteers_with_time(self):
         list_of_ids = []
-        for i in range(self.difference_in_days):
+        for day_after_start_date in range(self.difference_in_days):
             for id in self.nearest_volunteers:
-                if (self.start_date.weekday()+i) % 7 in self.main_dictionary[id].timestamp:
-                    if id not in list_of_ids:
+                day = (self.start_date.weekday()+day_after_start_date) % 7
+                if day in self.main_dictionary[id].availability and id not in list_of_ids:
+                    if day_after_start_date == 0:
+                        list_of_hours = self.main_dictionary[id].availability[day]
+                        if list_of_hours[-1] > self.start_date.hour:
+                            list_of_ids.append(id)
+                    elif day_after_start_date == self.difference_in_days - 1:
+                        list_of_hours = self.main_dictionary[id].availability[day]
+                        if list_of_hours[0] < self.end_date.hour:
+                            list_of_ids.append(id)
+                    else: #you just add it because it's in between days
                         list_of_ids.append(id)
         return list_of_ids
 
@@ -47,7 +56,7 @@ class itemsRequest:
                         list_of_items.append(item)
                         if item not in dictionary_of_items:
                             dictionary_of_items[item] = []
-                        if shop_id not in dictionary_of_items[item]:
+                        if shop_id not in dictionary_of_items[item]: #this is added after debugging
                             dictionary_of_items[item].append(shop_id)
                 if len(list_of_items) >= 1:
                     dictionary_of_shops[shop_id] = list_of_items
