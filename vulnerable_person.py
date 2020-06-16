@@ -21,7 +21,7 @@ class vulnerable_person:
 
 
     def request_items(self,list_of_essentials, start_date, end_date, emergency_rating):
-        return itemsRequest(self.id_code,list_of_essentials, start_date, end_date, emergency_rating, len(self.nearest_shops))
+        return itemsRequest(self.id_code,list_of_essentials, start_date, end_date, emergency_rating, len(self.nearest_shops), self.dictionary)
 
     def add_nearest_user(self, id, distance):
         if id.startswith("SH"):

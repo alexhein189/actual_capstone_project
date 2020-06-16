@@ -47,7 +47,8 @@ class itemsRequest:
                         list_of_items.append(item)
                         if item not in dictionary_of_items:
                             dictionary_of_items[item] = []
-                        dictionary_of_items[item].append(shop_id)
+                        if shop_id not in dictionary_of_items[item]:
+                            dictionary_of_items[item].append(shop_id)
                 if len(list_of_items) >= 1:
                     dictionary_of_shops[shop_id] = list_of_items
         return dictionary_of_shops, dictionary_of_items
@@ -62,6 +63,9 @@ class itemsRequest:
                     counter +=1
             if counter == len(dictionary_of_user[user_id]):
                 del dictionary_of_user[user_id]
+                for item in dictionary_of_items:
+                    if user_id in dictionary_of_items[item]:
+                        dictionary_of_items[item].remove(user_id)
             else:
                 list_of_optimal_users.append(user_id)
         return list_of_optimal_users
@@ -76,7 +80,8 @@ class itemsRequest:
                     list_of_shops_for_volunteer.append(shop)
                     if shop not in dictionary_of_shop_to_volun:
                         dictionary_of_shop_to_volun[shop] = []
-                    dictionary_of_shop_to_volun[shop].append(volunteer)
+                    if volunteer not in dictionary_of_shop_to_volun[shop]:
+                        dictionary_of_shop_to_volun[shop].append(volunteer)
             if len(list_of_shops_for_volunteer) >= 1:
                 dictionary_of_volun_to_shop[volunteer] = list_of_shops_for_volunteer
 
