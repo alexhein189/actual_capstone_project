@@ -29,13 +29,15 @@ class itemsRequest:
 
     def find_volunteers_with_time(self):
         list_of_ids = []
-        for day_after_start_date in range(self.difference_in_days):
+        now = datetime.datetime.today()
+        difference_between_now_and_end_in_days = (self.end_date.date() - now.date()).days
+        for day_after_start_date in range(difference_between_now_and_end_in_days):
             for id in self.nearest_volunteers:
-                day = (self.start_date.weekday()+day_after_start_date) % 7
+                day = (now.weekday()+day_after_start_date) % 7
                 if day in self.main_dictionary[id].availability and id not in list_of_ids:
                     if day_after_start_date == 0:
                         list_of_hours = self.main_dictionary[id].availability[day]
-                        if list_of_hours[-1] > self.start_date.hour:
+                        if list_of_hours[-1] > now.hour:
                             list_of_ids.append(id)
                     elif day_after_start_date == self.difference_in_days - 1:
                         list_of_hours = self.main_dictionary[id].availability[day]
