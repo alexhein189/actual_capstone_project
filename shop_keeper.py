@@ -12,9 +12,11 @@ class shop_keeper:
         self.longitude = longitude
         self.latitude = latitude
         self.items_in_stock = items_in_stock
+        self.nearest_shops = {}
         dictionary[id_code] = self
         grid_.add_user_(latitude, longitude, id_code)
-        grid_.get_nearest_users(latitude, longitude, id_code, dictionary)
+        for id, distance in grid_.get_nearest_users(latitude, longitude, id_code, dictionary).items():
+            self.add_nearest_user(id, distance)
 
     def contains_item(self, item_name):
         if item_name in self.items_in_stock and (self.items_in_stock[item_name].stock_quantity != 0):
@@ -58,4 +60,5 @@ class shop_keeper:
             raise NoItemsException()
 
     def add_nearest_user(self, id, distance):
-        pass
+        if id.startswith("SH"):
+            self.nearest_shops[id] = distance

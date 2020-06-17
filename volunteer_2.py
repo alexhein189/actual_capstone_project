@@ -1,6 +1,7 @@
 from scheduling2 import available_time
 from typing import Dict
 from typing import List
+from collections import deque
 
 from _grid import grid
 
@@ -9,7 +10,7 @@ from _grid import grid
 class volunteer_var:
 
     def __init__(self, name: str, username: str, id_code: str,
-                 latitude:float, longitude:float, availability: Dict[int, List[int]], available_range:float, grid_:grid, dictionary):
+                 latitude:float, longitude:float, availability: Dict[int, List[(int, int)]], available_range:float, grid_:grid, dictionary):
         self.name = name
         self.username = username
         self.id_code = id_code
@@ -19,6 +20,7 @@ class volunteer_var:
         self.longitude = longitude
         self.latitude = latitude
         self.available_range = available_range
+        self.deque_of_vulnerable_people = deque()
         self.dictionary = dictionary
         dictionary[id_code] = self
         self.nearest_shops = {}
@@ -35,3 +37,6 @@ class volunteer_var:
                     self.dictionary[vulner_id].accessible_shops[id] = distance
             if id.startswith("VP"):
                 self.nearest_vulnerable_people[id] = distance
+
+    def add_to_deque(self, volunteer_task):
+        self.deque_of_vulnerable_people.append(volunteer_task)

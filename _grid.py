@@ -21,7 +21,7 @@ class grid:
     #     max_x = int((latitude + 0.1) * 10)
     #     min_x = int((latitude - 0.1) * 10)
     #     max_y = int((longitude + 0.1) * 10)
-    #     min_y = int((longitude + 0.1) * 10)
+    #     min_y = int((longitude - 0.1) * 10)
     #     list_of_adjacent_coord = [(max_x, max_y), (min_x,min_y),(min_x, max_y), (max_x,min_y), (x, max_y),(max_x,y), (min_x,y),(x,min_y), (x,y)]
     #     list_of_places = []
     #     for i in range(len(list_of_adjacent_coord)):
