@@ -26,6 +26,7 @@ class vulnerable_person:
     def add_nearest_user(self, id, distance):
         if id.startswith("SH"):
             self.nearest_shops[id] = distance
+            #make it more
             for volunt_id in self.nearest_volunteers:
                 if id in self.dictionary[volunt_id].nearest_shops:
                     self.accessible_shops[id] = distance

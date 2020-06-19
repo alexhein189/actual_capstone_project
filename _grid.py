@@ -46,15 +46,16 @@ class grid:
         y = int(longitude * 10)
         distance_dict = {}
         no_squares = ceil(available_range / 5)
-        for i in range(x - no_squares, x + no_squares + 1):
-            for j in range(y - no_squares, y + no_squares + 1):
+        for i in range(x - no_squares, x + no_squares + 1): #maximum is 4, so it's constant
+            for j in range(y - no_squares, y + no_squares + 1): #maximum is 4, so it's constant
                 if (i, j) in self.dictionary_of_places:
-                    for id in self.dictionary_of_places[(i, j)]:
+                    for id in self.dictionary_of_places[(i, j)]:#num_id, number of id O(num_id) (O(v+s+vu))
                         user = dictionary[id]
                         # TODO: To make sure where the latitude and longitude are coming from
                         d = distance(latitude, longitude, user.latitude, user.longitude).calculate_distance()
                         if d < available_range and (d < user.available_range if id.startswith("VO") else True):
                             distance_dict[id] = d
-        for id, d in distance_dict.items():
+        for id, d in distance_dict.items(): #num_id, O(v+s+vu), linear
             dictionary[id].add_nearest_user(new_user_id, d)
+        #=> O(v+s+vu), this is NOT THE NUMBER OF USERS IN THE WHOLE SYSTEM. It's in that grid which is small and mangeable.
         return distance_dict

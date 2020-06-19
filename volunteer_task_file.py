@@ -1,4 +1,6 @@
 from datetime import datetime
+from distance import distance
+import random
 
 class volunteer_task:
     def __init__(self, item_request_id, vulnerable_id_code, volunteer_id_code, shops_and_items, end_date, main_dictionary):
@@ -13,6 +15,22 @@ class volunteer_task:
 
 
     def calculate_time_take(self):
-        if len(self.main_dictionary[self.volunteer_id_code].deque_of_vulnerable_people) == 0:
-            pass
+        current_longitude = self.main_dictionary[self.volunteer_id_code].longitude
+        current_latitude = self.main_dictionary[self.volunteer_id_code].latitude
+
+        # distance_between_home_and_s1 = distance(volunteer_latitude,random_shop_latitude,volunteer_longitude,random_shop_longitude)
+        total_distance_of_locations = 0
+        locations = list(self.shops_and_items.keys()) + [self.vulnerable_idcode, self.volunteer_id_code]
+        for location_id in locations:
+            next_latitude = self.main_dictionary[location_id].latitude
+            next_longitude = self.main_dictionary[location_id].longitude
+            distance_between_current_location_and_next_shop = distance(current_latitude, next_latitude, current_longitude,
+                                                    next_longitude)
+            total_distance_of_locations += distance_between_current_location_and_next_shop
+            current_longitude = next_longitude
+            current_latitude = next_latitude
+
+        total_time = total_distance_of_locations // 3.7 #3.7 mi/hr walking speed
+
+        return total_time
 

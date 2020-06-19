@@ -17,6 +17,7 @@ class volunteer_var:
         for day in availability:
             availability[day].sort()
         self.availability = availability
+        self.schedule = {}
         self.longitude = longitude
         self.latitude = latitude
         self.available_range = available_range
@@ -34,9 +35,22 @@ class volunteer_var:
             if id.startswith("SH"):
                 self.nearest_shops[id] = distance
                 for vulner_id in self.nearest_vulnerable_people:
+                    # TODO: this is just distance from volunteer to shop
                     self.dictionary[vulner_id].accessible_shops[id] = distance
             if id.startswith("VP"):
                 self.nearest_vulnerable_people[id] = distance
 
     def add_to_deque(self, volunteer_task):
         self.deque_of_vulnerable_people.append(volunteer_task)
+
+    def add_to_schedule(self, day, interval, task):
+        amount_of_time = task.calculate_time_take()
+        interval_length = interval[1]- interval[0]
+
+        if day not in self.schedule:
+            self.schedule[day] = {}
+        if interval not in self.schedule[day]:
+            self.schedule[day][interval] = {task: amount_of_time, "free": interval_length - amount_of_time}
+        else:
+            self.schedule[day][interval][task] = task.amount_of_time
+            self.schedule[day][interval]["free"] -= task.amount_of_time
