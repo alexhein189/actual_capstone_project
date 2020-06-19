@@ -11,7 +11,7 @@ class volunteer_task:
         self.start_date = datetime.today()
         self.end_date = end_date
         self.main_dictionary = main_dictionary
-        self.time_taken_for_task = 0
+        self.duration = self.calculate_time_take()
 
 
     def calculate_time_take(self):
@@ -24,13 +24,13 @@ class volunteer_task:
         for location_id in locations:
             next_latitude = self.main_dictionary[location_id].latitude
             next_longitude = self.main_dictionary[location_id].longitude
-            distance_between_current_location_and_next_shop = distance(current_latitude, next_latitude, current_longitude,
-                                                    next_longitude)
+            distance_between_current_location_and_next_shop = distance(current_latitude, current_longitude, next_latitude,
+                                                    next_longitude).calculate_distance()
             total_distance_of_locations += distance_between_current_location_and_next_shop
             current_longitude = next_longitude
             current_latitude = next_latitude
 
-        total_time = total_distance_of_locations // 3.7 #3.7 mi/hr walking speed
-
+        total_time_in_hr = (total_distance_of_locations / 30) #30 mi/hr DRIVING speed
+        total_time = total_time_in_hr * 60
         return total_time
 

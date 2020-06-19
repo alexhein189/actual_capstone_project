@@ -43,30 +43,58 @@ class itemsRequest:
             for id in self.nearest_volunteers: #v, v is the number of available volunteers (distance), O(n)
                 day = (now.weekday()+day_after_start_date) % 7
                 date = now.date() + datetime.timedelta(days=day_after_start_date)
-
-                for interval in self.main_dictionary[id].availability[day]: #24 or 13 intervals in one day so it's O(1)
-                    if day in self.main_dictionary[id].availability:
+                if day in self.main_dictionary[id].availability:
+                    for interval in self.main_dictionary[id].availability[day]: #24 or 13 intervals in one day so it's O(1)
                         if day_after_start_date == 0:
                             # list_of_hours = self.main_dictionary[id].availability[day]
-                            if interval[1] < now.hour:
+                            if interval[1] <= now.hour:
                                 continue
                         elif day_after_start_date == self.difference_in_days - 1:
-                            if interval[0] > self.end_date.hour:
-                                continue
+                            if interval[0] >= self.end_date.hour:
+                                break
                         available_shops = {}
                         for shop_id in self.main_dictionary[id].nearest_shops:  # s, where s is the number of shops
                             if shop_id in dictionary_of_shops:
                                 available_shops[shop_id] = dictionary_of_shops[shop_id]
                         upperbound_time = volunteer_task(self.item_request_id, self.vulnerable_id_code, id, available_shops, self.end_date, self.main_dictionary).calculate_time_take()
-                        if date in self.main_dictionary[id].schedule and interval in self.main_dictionary[id].schedule[date]:
-                            if self.main_dictionary[id].schedule[date][interval]["free"] > upperbound_time:
-                                dictionary_of_volunteer_to_day_to_interval[id] = (date, interval)
-                                break
+
+                        if now.hour >= interval[0] and day_after_start_date == 0:
+
+                            if date in self.main_dictionary[id].schedule and interval in self.main_dictionary[id].schedule[date]:
+                                if now > self.main_dictionary[id].schedule[date][interval][-1].end_time :
+                                    length_of_interval = (datetime.datetime.combine(date, datetime.time(hour=interval[1])) - now).total_seconds() / 60
+                                    if upperbound_time < length_of_interval:
+                                        dictionary_of_volunteer_to_day_to_interval[id] = (date, interval)
+                                        break
+                                else:
+                                    upperbound_end_time = self.main_dictionary[id].schedule[date][interval][-1].end_time + datetime.timedelta(minutes=upperbound_time)
+                                    end_interval_hour = now.replace(hour = interval[1],minute = 0)
+                                    if upperbound_end_time < end_interval_hour:
+                                        dictionary_of_volunteer_to_day_to_interval[id] = (date, interval)
+                                        break
+                            # elif now > self.main_dictionary[id].schedule[date][interval][-1].end_time:
+                            #     length_of_interval = interval[1] - now
+                            #     if upperbound_time < length_of_interval:
+                            #         dictionary_of_volunteer_to_day_to_interval[id] = (date, interval)
+                            #         break
+                            else:
+                                length_of_interval = (interval[1]-interval[0]) * 60
+                                if upperbound_time < length_of_interval:
+                                    dictionary_of_volunteer_to_day_to_interval[id] = (date, interval)
+                                    break
                         else:
-                            length_of_interval = interval[1]-interval[0]
-                            if upperbound_time < length_of_interval:
-                                dictionary_of_volunteer_to_day_to_interval[id] = (date, interval)
-                                break
+                            if date not in self.main_dictionary[id].schedule or interval not in self.main_dictionary[id].schedule[date]:
+                                length_of_interval = (interval[1] - interval[0]) * 60
+                                if upperbound_time < length_of_interval:
+                                    dictionary_of_volunteer_to_day_to_interval[id] = (date, interval)
+                                    break
+                            else:
+                                upperbound_end_time = self.main_dictionary[id].schedule[date][interval][
+                                                          -1].end_time + datetime.timedelta(minutes=upperbound_time)
+                                end_interval_hour = now.replace(hour=interval[1], minute=0)
+                                if upperbound_end_time < end_interval_hour:
+                                    dictionary_of_volunteer_to_day_to_interval[id] = (date, interval)
+                                    break
         #7 x n x 24 = 168n
         #O(vs)
         #TODO: put a maximum on the number of volunteers to consider
@@ -100,8 +128,8 @@ class itemsRequest:
             else:
                 for item in dictionary_of_shops[shop_id]:
                     if item not in dictionary_of_items_with_shop_counts:
-                        dictionary_of_items_with_shop_counts[item] = 0
-                    if shop_id not in dictionary_of_items_with_shop_counts[item]:  # this is added after debugging
+                        dictionary_of_items_with_shop_counts[item] = 1
+                    else:
                         dictionary_of_items_with_shop_counts[item] += 1
 
         # complexity of this algorithm is quadratic O(n^2)
@@ -139,8 +167,8 @@ class itemsRequest:
                 if shop in self.main_dictionary[volunteer].nearest_shops:
                     list_of_shops_for_volunteer.append(shop)
                     if shop not in dictionary_of_shop_to_volun_with_count:
-                        dictionary_of_shop_to_volun_with_count[shop] = 0
-                    if volunteer not in dictionary_of_shop_to_volun_with_count[shop]:
+                        dictionary_of_shop_to_volun_with_count[shop] = 1
+                    else:
                         dictionary_of_shop_to_volun_with_count[shop] += 1
             if len(list_of_shops_for_volunteer) >= 1:
                 dictionary_of_volun_to_shop[volunteer] = list_of_shops_for_volunteer
