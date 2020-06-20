@@ -105,7 +105,7 @@ class itemsRequest:
         for shop_id in self.main_dictionary[self.vulnerable_id_code].accessible_shops: #s, where s is the number of shops
             list_of_items =[]
             for item in self.items:#i, where i is the number of items
-                if item in self.main_dictionary[shop_id].items_in_stock:
+                if item in self.main_dictionary[shop_id].items_in_stock and self.main_dictionary[shop_id].items_in_stock[item].stock_quantity > 0:
                     list_of_items.append(item)
             if len(list_of_items) >= 1:
                 dictionary_of_shops[shop_id] = list_of_items
@@ -265,6 +265,7 @@ class itemsRequest:
             volunteer_task_specific = volunteer_task(self.item_request_id, self.vulnerable_id_code, volunteer, best_match_vol_shop_item[volunteer], self.end_date, self.main_dictionary)
             day, interval = dictionary_of_available_volunteers_with_day_and_interval[volunteer]
             self.main_dictionary[volunteer].add_to_schedule(day, interval, volunteer_task_specific)
+            volunteer_task_specific.reserve_items()
 
             #O(v) + O(si) + O(vs) +  O(s+i)
             # O(si) + O(vs) => quadratic

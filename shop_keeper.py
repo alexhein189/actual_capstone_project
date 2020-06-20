@@ -52,6 +52,11 @@ class shop_keeper:
 
     # make another method to remove the stock based on expiration date, separate from the purchases
 
+    def reserving_items_for_vul(self, list_of_items):
+        for item in list_of_items:
+            self.items_in_stock[item].stock_quantity -=1
+
+
     #consider removing this
     def update_stock_price(self,item_name, new_item_price):
         if self.contains_item(self.items_in_stock[item_name]):

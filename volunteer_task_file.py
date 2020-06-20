@@ -34,3 +34,7 @@ class volunteer_task:
         total_time = total_time_in_hr * 60
         return total_time
 
+    def reserve_items(self):
+        for shop in self.shops_and_items:
+            self.main_dictionary[shop].reserving_items_for_vul(self.shops_and_items[shop])
+
