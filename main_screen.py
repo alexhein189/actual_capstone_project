@@ -6,6 +6,7 @@ from volunteer_2 import volunteer_var
 from vulnerable_person import vulnerable_person
 from all_pending_requests import pending_requests
 from local_councils import the_local_council
+from the_matching_algorithm import matching_algorithm
 from items import item
 
 
@@ -48,6 +49,7 @@ def asking_vulnerable_person():
     new_vulnerable_person = vulnerable_person(name, username, user_id, latitude, longitude, main_grid, main_users_dictionary)
 
 the_council = the_local_council(main_users_dictionary, main_grid)
+actual_matching_algorithm = matching_algorithm(main_users_dictionary)
 
 # def asking_volunteer():
 #     name = input("Name:")
@@ -96,17 +98,18 @@ chris_vulnerable.request_items("RQ91234",["carrots","paracetemol","rice", "cough
 alice_vulnerable.request_items("RQ78743",["biscuits","tomatoes","rice", "paracetemol", "bread"], test_start_date, today+datetime.timedelta(days=1), 1, priority_queue)
 kate_vulnerable.request_items("RQ33219",["pasta","tomatoes","cough drops", "paracetemol", "bread"], test_start_date_1, today+datetime.timedelta(days=2), 8, priority_queue)
 
+
 request_1 =priority_queue.remove_request()
-allocation_1 = {main_users_dictionary[request_1.vulnerable_id_code].name:request_1.matching_volunteers_and_shops()}
+allocation_1 = {main_users_dictionary[request_1.vulnerable_id_code].name:actual_matching_algorithm.matching_volunteers_and_shops(request_1)}
 
 request_2 =priority_queue.remove_request()
-allocation_2 = {main_users_dictionary[request_2.vulnerable_id_code].name:request_2.matching_volunteers_and_shops()}
+allocation_2 = {main_users_dictionary[request_2.vulnerable_id_code].name:actual_matching_algorithm.matching_volunteers_and_shops(request_2)}
 
 request_3 =priority_queue.remove_request()
-allocation_3 = {main_users_dictionary[request_3.vulnerable_id_code].name:request_3.matching_volunteers_and_shops()}
+allocation_3 = {main_users_dictionary[request_3.vulnerable_id_code].name:actual_matching_algorithm.matching_volunteers_and_shops(request_3)}
 
 request_4 =priority_queue.remove_request()
-allocation_4 = {main_users_dictionary[request_4.vulnerable_id_code].name:request_4.matching_volunteers_and_shops()}
+allocation_4 = {main_users_dictionary[request_4.vulnerable_id_code].name:actual_matching_algorithm.matching_volunteers_and_shops(request_4)}
 
 
 
