@@ -7,7 +7,6 @@ from vulnerable_person import vulnerable_person
 from all_pending_requests import pending_requests
 from local_councils import the_local_council
 from items import item
-import pandas as pd
 
 
 
