@@ -41,6 +41,12 @@ class itemsRequest:
         dictionary_of_volunteer_to_day_to_interval = {}
         for day_after_start_date in range(min_difference_between_now_and_end_in_days): # O(1) because it's 7, it's maximum is 7
             for id in self.nearest_volunteers: #v, v is the number of available volunteers (distance), O(n)
+                available_shops = {}
+                for shop_id in self.main_dictionary[id].nearest_shops:  # s, where s is the number of shops
+                    if shop_id in dictionary_of_shops:
+                        available_shops[shop_id] = dictionary_of_shops[shop_id]
+                upperbound_time = volunteer_task(self.item_request_id, self.vulnerable_id_code, id, available_shops,
+                                                 self.end_date, self.main_dictionary).duration
                 day = (now.weekday()+day_after_start_date) % 7
                 date = now.date() + datetime.timedelta(days=day_after_start_date)
                 if day in self.main_dictionary[id].availability:
@@ -52,11 +58,6 @@ class itemsRequest:
                         elif day_after_start_date == self.difference_in_days - 1:
                             if interval[0] >= self.end_date.hour:
                                 break
-                        available_shops = {}
-                        for shop_id in self.main_dictionary[id].nearest_shops:  # s, where s is the number of shops
-                            if shop_id in dictionary_of_shops:
-                                available_shops[shop_id] = dictionary_of_shops[shop_id]
-                        upperbound_time = volunteer_task(self.item_request_id, self.vulnerable_id_code, id, available_shops, self.end_date, self.main_dictionary).calculate_time_take()
 
                         if now.hour >= interval[0] and day_after_start_date == 0:
 

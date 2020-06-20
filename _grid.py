@@ -57,5 +57,5 @@ class grid:
                             distance_dict[id] = d
         for id, d in distance_dict.items(): #num_id, O(v+s+vu), linear
             dictionary[id].add_nearest_user(new_user_id, d)
-        #=> O(v+s+vu), this is NOT THE NUMBER OF USERS IN THE WHOLE SYSTEM. It's in that grid which is small and mangeable.
+        #=> O(volunteer+shop+vulnerable), this is NOT THE NUMBER OF USERS IN THE WHOLE SYSTEM. It's in that grid which is small and mangeable.
         return distance_dict
